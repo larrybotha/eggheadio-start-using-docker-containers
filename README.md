@@ -6,6 +6,8 @@ Each lesson is on its own branch
 
 ## Run short-lived docker containers
 
+https://egghead.io/lessons/tools-run-short-lived-docker-containers
+
 - containers are usually run as background daemons using the `-d` flag:
 
     ```bash
