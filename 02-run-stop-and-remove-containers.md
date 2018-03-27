@@ -3,7 +3,7 @@
 https://egghead.io/lessons/tools-run-stop-and-remove-docker-containers?pl=docker-511c5e3f
 
 - 2 ways to run containers
-    1 `$ docker run [name-of-image]`
+    1. `$ docker run [name-of-image]`
 
         e.g. `$ docker run mongo`
 
@@ -14,7 +14,7 @@ https://egghead.io/lessons/tools-run-stop-and-remove-docker-containers?pl=docker
 
         `ctrl-C` stops the container
 
-    2 `$ docker run -d [name-of-image]`
+    2. `$ docker run -d [name-of-image]`
 
         With the `-d` flag we run the image in the background.
 - Listing containers
