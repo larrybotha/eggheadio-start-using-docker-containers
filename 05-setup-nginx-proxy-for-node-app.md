@@ -36,3 +36,68 @@ https://egghead.io/lessons/node-js-setup-an-nginx-proxy-for-a-node-js-app-with-d
     # Only the last CMD will take effect
     CMD node index.js
     ```
+- Dockerfiles are used to build images along with a context. A build's files are
+    located by a specified context, that being `PATH`, `URL`, or `-`. A build
+    can then reference files in the context, such as with `COPY`. _All_
+    files at the provided context get sent to the Docker deamon in order for an
+    image to be built - not only the files used in the `COPY` command inside the
+    Dockerfile. `.dockerignore` can be used to ignore files from the context and
+    thus reduce the size of the uploaded context.
+
+    The `build` command has the following syntax:
+
+    ```bash
+    $ docker build [OPTIONS] PATH | URL | -
+    ```
+
+    We can build an image, using a tag to make it easier to reference, using the
+    current directory as the context for the image:
+
+    ```bash
+    $ docker build -t foo/node  .
+    #         [1]  [    2    ] [3]
+    # 1 - use docker's 'build' command to build an image from a Dockerfile.
+    #     Because we're not specifying a Dockerfile, it looks for one in the
+    #     current directory
+    # 2 - build the image with the provided tag. We can reference docker to run
+    #     this image using foo/node once it's built
+    # 3 - the context for the image will be the current folder
+    ```
+
+    Once built, we can run a container using that image:
+
+    ```bash
+    $ docker run -d  -p 3000:3000 --name node-app foo/node
+    #            [1] [     2    ] [       3     ] [   4  ]
+    # 1 - run as a background daemon
+    # 2 - publish 3000 from the container (2nd value) to be accessible via 3000
+    #     on the host machine (first number)
+    # 3 - name this container so it can be referenced later. After stopping this
+    #     container we can start it with:
+    #     docker run node-app
+    # 4 - run this container using the image foo/node that we built
+    ```
+- Before creating the proxy, let's test that we can get nginx running:
+
+    ```bash
+    $ docker run --rm  -p 8000:80 nginx
+    #            [ 1 ] [    2   ]  [3]
+    # 1 - remove this container when it's stopped
+    # 2 - map 8000 on the host to 80 in the container - nginx's default port
+    # 3 - run this container using the latest nginx image
+    ```
+
+    Because we're using this container as a proxy, we won't be copying files
+    into it.
+- A proxy has been created in `./05-app/nginx`. We create a default config for
+    nginx with a `proxy_pass` to proxy all requests, and we create a Dockerfile
+    which, using the default nginx image, copies that config into a specified
+    location inside the image so that the container will run with our nginx
+    config instead of the default.
+
+    We then build an image with the tag `foo/nginx` from that Dockerfile:
+
+    ```bash
+    $ cd 05-app/nginx
+    $ docker build -t foo/nginx .
+    ```
