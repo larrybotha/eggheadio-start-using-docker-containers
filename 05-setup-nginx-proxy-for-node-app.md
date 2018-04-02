@@ -113,3 +113,21 @@ https://egghead.io/lessons/node-js-setup-an-nginx-proxy-for-a-node-js-app-with-d
     $ cd 05-app/nginx
     $ docker build -t foo/nginx .
     ```
+- Now that we have an image for the proxy (tagged `foo/nginx`) we run a
+    container using it as the base image.
+
+    ```bash
+    $ docker run -p 8000:80 --link node-app:app --name nginx-proxy foo/nginx
+    #            [    1   ] [        2        ] [        3       ] [   4   ]
+    # 1 - create a container binding 8000 on the host to 80 in the container
+    #     (nginx's default)
+    # 2 - link the currently running 'node-app' to this container, giving it
+    #     an alias of 'app'. The alias is the same as the
+    # 3 - give the container a name so we can use `docker start nginx-proxy`
+    #     later, or reference the container elsewhere
+    # 4 - run this container using the foo/nginx image
+    ```
+
+    With the `node-app` container running, and the `nginx-proxy` container
+    running, we can access the app via `localhost:3000` directly, or via the
+    proxy at `localhost:8000`
