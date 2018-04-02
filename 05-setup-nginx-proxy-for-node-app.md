@@ -131,3 +131,78 @@ https://egghead.io/lessons/node-js-setup-an-nginx-proxy-for-a-node-js-app-with-d
     With the `node-app` container running, and the `nginx-proxy` container
     running, we can access the app via `localhost:3000` directly, or via the
     proxy at `localhost:8000`
+- Docker's `--link` flag is deprecated. Instead, it's recommended to use a
+    *user-defined bridge*.
+
+    First, create a network:
+
+    ```bash
+    $ docker network create my-net
+    ```
+
+    When creating a container, the network can be specified there:
+
+    ```bash
+    $ docker run -d -p 8000:80 --network my-net --name nginx-proxy foo/nginx
+    ```
+
+    Existing containers can be connected to the network:
+
+    ```bash
+    $ docker network connect my-net node-app --alias app
+    #          [1]   [      2     ] [   3  ] [    4    ]
+    # 1 - use the network comman
+    # 2 - to connect something to the existing my-net network
+    # 3 - and that something we connect is the running container with the name of
+    #     'node-app'
+    # 4 - and we alias node-app with 'app' for our upstream in the nginx config
+    ```
+
+    We now have 2 containers running, and both are connected to our user-defined
+    network `my-net`:
+
+    ```bash
+    $ docker network inspect my-net
+    # ...
+    "Containers": {
+        "94b017d18b8efda784fc6095c0ea8d9e57aebbf61c5460184417ab02ca2234fc": {
+            "Name": "node-app",
+            # ...
+        },
+        "c50afd0d5ac18c2498bddf376a3220332c18107ba887b1f5155d624f144dd00c": {
+            "Name": "nginx-proxy",
+            # ...
+        }
+    },
+    # ...
+    ```
+
+    We can access both our original app at `localhost:3000`, and at the proxy at
+    `localhost:8000`.
+- to remove a network we need to first disconnect connected containers:
+
+    ```bash
+    $ docker network disconnect my-net nginx-proxy
+    ```
+
+    At this point we can no longer access our app via `localhost:8000`, but we
+    can continue to do so via the app's original url at `localhost:3000`.
+
+    We can now disconnect our app from the network:
+
+    ```bash
+    $ docker network disconnect my-net node-app
+    ```
+
+    Inspecting `my-net` now shows no connected containers. It can now be
+    removed:
+
+    ```bash
+    $ docker network remove my-net
+    ```
+
+    And we can verify that:
+
+    ```bash
+    $ docker network ls
+    ```
