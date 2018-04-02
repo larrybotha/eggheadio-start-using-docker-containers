@@ -77,6 +77,18 @@ https://egghead.io/lessons/node-js-setup-an-nginx-proxy-for-a-node-js-app-with-d
     #     docker run node-app
     # 4 - run this container using the image foo/node that we built
     ```
+
+    We can see which images are on the system using:
+
+    ```bash
+    $ docker images
+    ```
+
+    and remove an images using:
+
+    ```bash
+    $ docker rmi [image-name]
+    ```
 - Before creating the proxy, let's test that we can get nginx running:
 
     ```bash
