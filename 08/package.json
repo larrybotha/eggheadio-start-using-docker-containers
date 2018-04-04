@@ -1,0 +1,23 @@
+{
+  "name": "eggheadio-start-using-docker-containers",
+  "version": "1.0.0",
+  "description": "Learning and annotations from https://egghead.io/playlists/docker-511c5e3f",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/larrybotha/eggheadio-start-using-docker-containers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/larrybotha/eggheadio-start-using-docker-containers/issues"
+  },
+  "homepage": "https://github.com/larrybotha/eggheadio-start-using-docker-containers#readme",
+  "dependencies": {
+    "faker": "^4.1.0"
+  }
+}
