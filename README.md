@@ -10,3 +10,5 @@ Each lesson is on its own branch
 4. [Manage data within docker volumes](./04-manage-data-within-docker-volumes.md)
 5. [Setup an nginx proxy for a node app (using a Dockerfile)](./05-setup-nginx-proxy-for-node-app.md)
 6. [Deploy a Docker project with Zeit's Now](./05-setup-nginx-proxy-for-node-app.md)
+7. Build a simple NodeJs web server with Docker - already covered in #5
+8. [Deploy NodeJs on Docker](./08-deploy-nodejs-on-docker.md)
