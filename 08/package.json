@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/larrybotha/eggheadio-start-using-docker-containers#readme",
   "dependencies": {
+    "dotenv": "^5.0.1",
     "faker": "^4.1.0"
   }
 }
