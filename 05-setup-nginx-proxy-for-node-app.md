@@ -11,7 +11,7 @@ https://egghead.io/lessons/node-js-setup-an-nginx-proxy-for-a-node-js-app-with-d
 
      Commands are case-insensitive, but convention is to UPPERCASE them.
 
-    ```
+    ```dockerfile
     # FROM must be the first instruction in a Dockerfile
     # FROM specifies the base image from which an image will be built
     FROM mhart/alpine-node
