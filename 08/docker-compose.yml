@@ -1,0 +1,28 @@
+# define an 'app' service
+app:
+  # it's likely our container will be running alongside other containers on the
+  # same host. So that this container doesn't hog all the memory, we limit memory
+  # usage, as well as swap file allocation
+  mem_limit: 300m
+  memswap_limit: 1g
+
+  # define the context for our Dockerfile and compose to be the current directory
+  build: .
+
+  ports:
+    # map 3000 on the host to 3000 in the container
+    # 3000 is the port we specified our server to run on
+    - '3000:3000'
+
+  # define a volume for our app
+  volumes:
+    - .:/home/node/app
+    # [1][      2       ]
+    # 1 - the current location where the docker-compose file is located. It is a
+    #     relative file path for the machine that will be running the container.
+    #     Changes on the host machine will be immediately available in the container
+    # 2 - the path inside the container where we want the volume mapped
+
+    # we also need to specify that the app has access to the node_modules folder
+    # inside the container once installed
+    - /home/node/app/node_modules
