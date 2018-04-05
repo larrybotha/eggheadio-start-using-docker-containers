@@ -35,4 +35,15 @@ https://egghead.io/lessons/node-js-deploy-node-js-on-docker?pl=docker-511c5e3f
     ```dockerfile
     ENV NODE_ENV=production
     ```
+- We also have a `docker-compose.yml` file. This file is used to define
+    services, networks, and volumes for our container.
+- Once we've added our config we can build an image using `docker-compose`:
 
+    ```bash
+    $ docker-compose build
+    ```
+- Once an image has been built we can run it using `docker-compose` too
+
+    ```bash
+    $ docker-compose up
+    ```
